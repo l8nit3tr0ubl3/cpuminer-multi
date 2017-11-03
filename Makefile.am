@@ -56,8 +56,11 @@ cpuminer_SOURCES = \
   algo/argon2d.c \
   algo/argon2/argon2.c \
   algo/argon2/argon2.h \
+  algo/argon2/blake2.h \
+  algo/argon2/blake2b.c \
   algo/argon2/blake2-impl.h \
   algo/argon2/blamka-round-opt.h \
+  algo/argon2/blamka-round-ref.h \
   algo/argon2/core.c \
   algo/argon2/core.h \
   algo/argon2/encoding.c \

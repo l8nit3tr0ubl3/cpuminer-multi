@@ -540,3 +540,4 @@ void zr5hash_pok(void *output, uint32_t *pdata);
 
 
 #endif /* __MINER_H__ */
+

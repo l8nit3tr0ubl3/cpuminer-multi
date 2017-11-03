@@ -20,19 +20,13 @@
 
 #include "argon2.h"
 
-#if defined(_MSC_VER)
-#define ALIGN(n) __declspec(align(16))
-#elif defined(__GNUC__) || defined(__clang)
-#define ALIGN(x) __attribute__((__aligned__(x)))
-#else
-#define ALIGN(x)
-#endif
-
 #define CONST_CAST(x) (x)(uintptr_t)
 
 /**********************Argon2 internal constants*******************************/
 
 enum argon2_core_constants {
+    /* Version of the algorithm */   
+    ARGON2_VERSION_NUMBER = 0x10,
     /* Memory block size in bytes */
     ARGON2_BLOCK_SIZE = 1024,
     ARGON2_QWORDS_IN_BLOCK = ARGON2_BLOCK_SIZE / 8,
@@ -82,6 +76,7 @@ typedef struct Argon2_instance_t {
     uint32_t segment_length;
     uint32_t lane_length;
     uint32_t lanes;
+    uint32_t limit;
     uint32_t threads;
     argon2_type type;
     int print_internals; /* whether to print the memory blocks */

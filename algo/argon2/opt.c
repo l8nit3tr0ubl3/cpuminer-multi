@@ -20,13 +20,22 @@
 #include <stdlib.h>
 
 #include "argon2.h"
-#include "opt.h"
+#include "core.h"
 
 #include "blake2.h"
 #include "blamka-round-opt.h"
 
-void fill_block(__m128i *state, const block *ref_block, block *next_block,
-                int with_xor) {
+/*
+ * Function fills a new memory block and optionally XORs the old block over the new one.
+ * Memory must be initialized.
+ * @param state Pointer to the just produced block. Content will be updated(!)
+ * @param ref_block Pointer to the reference block
+ * @param next_block Pointer to the block to be XORed over. May coincide with @ref_block
+ * @param with_xor Whether to XOR into the new block (1) or just overwrite (0)
+ * @pre all block pointers must be valid
+ */
+static void fill_block(__m128i *state, const block *ref_block,
+                       block *next_block, int with_xor) {
     __m128i block_XY[ARGON2_OWORDS_IN_BLOCK];
     unsigned int i;
 
@@ -94,22 +103,6 @@ void fill_segment(const argon2_instance_t *instance,
         return;
     }
 
-    data_independent_addressing =
-        (instance->type == Argon2_i) ||
-        (instance->type == Argon2_id && (position.pass == 0) &&
-         (position.slice < ARGON2_SYNC_POINTS / 2));
-
-    if (data_independent_addressing) {
-        init_block_value(&input_block, 0);
-
-        input_block.v[0] = position.pass;
-        input_block.v[1] = position.lane;
-        input_block.v[2] = position.slice;
-        input_block.v[3] = instance->memory_blocks;
-        input_block.v[4] = instance->passes;
-        input_block.v[5] = instance->type;
-    }
-
     starting_index = 0;
 
     if ((0 == position.pass) && (0 == position.slice)) {
@@ -172,15 +165,8 @@ void fill_segment(const argon2_instance_t *instance,
         ref_block =
             instance->memory + instance->lane_length * ref_lane + ref_index;
         curr_block = instance->memory + curr_offset;
-        if (ARGON2_VERSION_10 == instance->version) {
-            /* version 1.2.1 and earlier: overwrite, not XOR */
-            fill_block(state, ref_block, curr_block, 0);
-        } else {
-            if(0 == position.pass) {
-                fill_block(state, ref_block, curr_block, 0);
-            } else {
-                fill_block(state, ref_block, curr_block, 1);
-            }
-        }
+            
+        fill_block(state, ref_block, curr_block, 0);
+
     }
 }
