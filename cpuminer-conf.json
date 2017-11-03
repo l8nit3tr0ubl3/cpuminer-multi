@@ -4,12 +4,12 @@
 
 	"api-bind" : "127.0.0.1:4048",
 
-	"url" : "stratum+tcp://yiimp.ccminer.org:4252",
-	"user" : "benchmark",
-	"pass" : "d=0.024",
+	"url" : "stratum+tcp://unomp.l8nit3-miners.com:4121",
+	"user" : "CP8y6Hy5953gR53y3yYizAeLEvSYB2F4XH",
+	"pass" : "dx",
 
-	"algo" : "decred",
-	"threads" : 0,
+	"algo" : "argon2d",
+	"threads" : 2,
 	"cpu-priority" : 0,
 	"cpu-affinity" : -1,
 
