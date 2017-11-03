@@ -32,6 +32,7 @@
 
 #include "core.h"
 #include "thread.h"
+#include "blake2b.c"
 #include "blake2.h"
 #include "blake2-impl.h"
 
