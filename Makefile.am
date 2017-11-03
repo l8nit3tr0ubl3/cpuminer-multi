@@ -53,6 +53,19 @@ cpuminer_SOURCES = \
   crypto/aesb.c \
   lyra2/Lyra2.c lyra2/Sponge.c \
   yescrypt/yescrypt-common.c yescrypt/yescrypt-best.c \
+  algo/argon2d.c \
+  algo/argon2/argon2.c \
+  algo/argon2/argon2.h \
+  algo/argon2/blake2-impl.h \
+  algo/argon2/blamka-round-opt.h \
+  algo/argon2/core.c \
+  algo/argon2/core.h \
+  algo/argon2/encoding.c \
+  algo/argon2/enconding.h \
+  algo/argon2/opt.c \
+  algo/argon2/opt.h \
+  algo/argon2/thread.c \
+  algo/argon2/thread.h \
   yescrypt/sha256_Y.c \
   algo/axiom.c \
   algo/bastion.c \
@@ -85,7 +98,6 @@ cpuminer_SOURCES = \
   algo/scrypt.c \
   algo/scrypt-jane.c \
   algo/sha2.c \
-  algo/sia.c \
   algo/sibcoin.c \
   algo/skein.c \
   algo/skein2.c \
